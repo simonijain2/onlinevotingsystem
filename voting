@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Voting System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            border: 3px solid black;
+            padding: 20px;
+            max-width: 400px;
+            margin: auto;
+        }
+        .hidden { display: none; }
+        .container { margin-top: 20px; }
+        button { margin: 10px; padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Online Voting System</h2>
+    <div id="loginPage" class="container">
+        <h3>Login</h3>
+        <input type="text" id="voterId" placeholder="Enter Voter ID" required><br>
+        <input type="password" id="password" placeholder="Enter Password" required><br>
+        <button onclick="login()">Login</button>
+        <p><a href="#" onclick="showForgotPassword()">Forgot Password?</a></p>
+    </div>
+    
+    <div id="forgotPasswordPage" class="container hidden">
+        <h3>Reset Password</h3>
+        <input type="email" id="email" placeholder="Enter Your Email" required><br>
+        <button onclick="verifyEmail()">Verify Email</button>
+    </div>
+    
+    <div id="votingPage" class="container hidden">
+        <h3>Cast Your Vote</h3>
+        <p>Voter ID: <span id="displayVoterId"></span></p>
+        <input type="radio" name="party" value="Simoni"> Simoni<br>
+        <input type="radio" name="party" value="Shruti"> Shruti<br>
+        <button onclick="submitVote()">Submit Vote</button>
+    </div>
+    
+    <div id="thankYouPage" class="container hidden">
+        <h3>Thank You for Voting!</h3>
+        <p>Your vote has been successfully recorded.</p>
+    </div>
+    
+    <script>
+        function login() {
+            let voterId = document.getElementById("voterId").value;
+            let password = document.getElementById("password").value;
+            if (voterId && password) {
+                document.getElementById("loginPage").classList.add("hidden");
+                document.getElementById("votingPage").classList.remove("hidden");
+                document.getElementById("displayVoterId").innerText = voterId;
+            } else {
+                alert("Please enter valid credentials");
+            }
+        }
+        function showForgotPassword() {
+            document.getElementById("loginPage").classList.add("hidden");
+            document.getElementById("forgotPasswordPage").classList.remove("hidden");
+        }
+        function verifyEmail() {
+            let email = document.getElementById("email").value;
+            if (email) {
+                alert("Password reset link sent to " + email);
+                document.getElementById("forgotPasswordPage").classList.add("hidden");
+                document.getElementById("loginPage").classList.remove("hidden");
+            } else {
+                alert("Please enter a valid email address");
+            }
+        }
+        function submitVote() {
+            let selectedParty = document.querySelector('input[name="party"]:checked');
+            if (selectedParty) {
+                document.getElementById("votingPage").classList.add("hidden");
+                document.getElementById("thankYouPage").classList.remove("hidden");
+            } else {
+                alert("Please select a party before submitting");
+            }
+        }
+    </script>
+</body>
+</html>
+
